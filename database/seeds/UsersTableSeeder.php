@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
 //        );
 
         factory(\App\User::class, 40)->create()->each(function ($user){
-            $user->stores()->save(factory(\App\Store::class)->make());
+            $user->store()->save(factory(\App\Store::class)->make());
         });
     }
 }

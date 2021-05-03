@@ -11,6 +11,6 @@ $factory->define(\App\Store::class, function (Faker $faker) {
         'description' => $faker->sentence,
         'phone' => $faker->phoneNumber,
         'mobile_phone' => $faker->phoneNumber,
-        'slug' => $faker->slug
+        'slug' => $faker->slug,
     ];
 });

@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Store extends Model
 {
@@ -19,7 +18,7 @@ class Store extends Model
         $this->belongsTo(User::class);
     }
 
-    public function products(): HasMany
+    public function products()
     {
         return $this->hasMany(Product::class);
     }
