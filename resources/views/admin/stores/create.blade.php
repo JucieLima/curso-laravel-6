@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
     <h1>Criar Loja</h1>
@@ -29,15 +29,6 @@
         <div class="form-group">
             <label for="slug">Slug</label>
             <input type="text" name="slug" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="user">Usuário</label>
-            <select name="user" id="user" class="form-control">
-                @foreach($users as $user)
-                    <option value="{{$user->id}}">{{$user->name}}</option>
-                @endforeach
-            </select>
         </div>
 
         <div>

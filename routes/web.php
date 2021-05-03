@@ -13,8 +13,10 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
-Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
+})->name('home');
+
+Route::group(['middleware' => ['auth']],function(){
+    Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
 
 //    Route::prefix('stores')->name('stores.')->group(function(){
 //
@@ -27,11 +29,11 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
 //
 //    });
 
-    Route::resource('stores', 'StoreController');
-    Route::resource('products', 'ProductController');
+        Route::resource('stores', 'StoreController');
+        Route::resource('products', 'ProductController');
+    });
+
 });
-
-
 
 //Route:get
 //Route:post
@@ -39,3 +41,5 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
 //Route:patch
 //Route:delete
 //Route:options
+
+Auth::routes();
