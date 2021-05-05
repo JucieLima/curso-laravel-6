@@ -56,11 +56,6 @@
             @enderror
         </div>
 
-        <div class="form-group">
-            <label for="slug">Slug</label>
-            <input type="text" name="slug" class="form-control" value="{{old('slug')}}">
-        </div>
-
         <div>
             <button class="btn btn-primary" type="submit">Criar Loja</button>
         </div>

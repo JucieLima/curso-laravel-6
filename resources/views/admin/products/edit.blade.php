@@ -66,8 +66,8 @@
 
         <div class="form-group">
             <label for="photos">Fotos do produto</label>
-            <input type="file" name="photos[]" id="photos" class="form-control @error('photos') is-invalid  @enderror" multiple>
-            @error('photos')
+            <input type="file" name="photos[]" id="photos" class="form-control @error('photos.*') is-invalid  @enderror" multiple>
+            @error('photos.*')
             <div class="invalid-feedback">
                 {{$message}}
             </div>

@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Product extends Model
 {
+    use HasSlug;
+
     protected $fillable = [
         'name',
         'description',
@@ -13,6 +17,7 @@ class Product extends Model
         'price',
         'slug'
     ];
+
     public function store()
     {
         return $this->belongsTo(Store::class);
@@ -26,5 +31,12 @@ class Product extends Model
     public function photos()
     {
         return $this->hasMany(ProductPhoto::class);
+    }
+
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }
