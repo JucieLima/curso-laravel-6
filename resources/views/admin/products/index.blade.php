@@ -34,5 +34,4 @@
         </tbody>
     </table>
     {{$products->links()}}
-    <a href="{{route('admin.products.create')}}" class="btn btn-lg btn-success mb-2 mt-3">Criar loja</a>
 @endsection
