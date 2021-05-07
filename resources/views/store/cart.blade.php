@@ -48,7 +48,7 @@
                     <a href="{{route('cart.cancel')}}" class="btn btn-lg btn-danger pull-left">
                         Cancelar Compra
                     </a>
-                    <a href="#" class="btn btn-lg btn-success pull-right">
+                    <a href="{{route('checkout.index')}}" class="btn btn-lg btn-success pull-right">
                         Concluir Compra
                     </a>
                 </div>
