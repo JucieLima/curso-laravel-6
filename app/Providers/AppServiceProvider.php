@@ -29,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
         \PagSeguro\Library::initialize();
         \PagSeguro\Library::cmsVersion()->setName("MarketplaceL6")->setRelease("1.0.0");
         \PagSeguro\Library::moduleVersion()->setName("MarketplaceL6")->setRelease("1.0.0");
+
     }
 }

@@ -20,11 +20,11 @@
                 <td>{{$category->name}}</td>
                 <td width="15%">
                     <div class="btn-group">
-                        <a href="{{route('admin.categories.edit', ['category' => $category->id])}}" class="btn btn-sm btn-primary rounded mr-1">EDITAR</a>
-                        <form action="{{route('admin.categories.destroy', ['category' => $category->id])}}" method="post">
+                        <a href="{{route('admin.categories.edit', ['category' => $category->slug])}}" class="btn btn-sm btn-primary rounded mr-1">Editar</a>
+                        <form action="{{route('admin.categories.destroy', ['category' => $category->slug])}}" method="post">
                             @csrf
                             @method("DELETE")
-                            <button type="submit" class="btn btn-sm btn-danger">REMOVER</button>
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
                         </form>
                     </div>
                 </td>
