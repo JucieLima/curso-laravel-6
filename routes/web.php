@@ -14,6 +14,7 @@
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/product/{slug}', 'HomeController@single')->name('product.single');
 Route::get('/category/{slug}', 'CategoryController@index')->name('category.single');
+Route::get('/store/{slug}', 'StoreController@index')->name('store.single');
 
 Route::prefix('cart')->name('cart.')->group(function(){
     Route::get('/', 'CartController@index')->name('index');
@@ -29,6 +30,9 @@ Route::prefix('checkout')->name('checkout.')->group(function(){
 });
 
 Route::group(['middleware' => ['auth']],function(){
+
+    Route::get('my-orders', 'UserOrderController@index')->name('user.orders');
+
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
 
         Route::resource('stores', 'StoreController');
@@ -36,6 +40,8 @@ Route::group(['middleware' => ['auth']],function(){
         Route::resource('categories', 'CategoryController');
 
         Route::post('photos/remove', 'ProductPhotoController@remove')->name('photo.remove');
+
+        Route::get('orders/my', 'OrdersController@index')->name('orders.my');
 
         //    Route::prefix('stores')->name('stores.')->group(function(){
         //

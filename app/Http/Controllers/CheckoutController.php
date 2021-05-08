@@ -14,7 +14,7 @@ class CheckoutController extends Controller
             return redirect()->route('login');
         }
 
-        if(!session()->has('cart')){
+        if (!session()->has('cart')) {
             return redirect()->route('home');
         }
 
@@ -31,39 +31,43 @@ class CheckoutController extends Controller
 
     public function process(Request $request)
     {
+        $cartItems = session()->get('cart');
+        $stores = array_unique(array_column($cartItems, 'store_id'));
+        $user = auth()->user();
+        $data = $request->all();
+        // Set a reference code for this payment request. It is useful to identify this payment
+        // in future notifications.
+        $reference = date('dmYHis');
+
+        $creditCardPayment = new CreditCard($cartItems, $user, $data, $reference);
+        $result = $creditCardPayment->doPayment();
+
+        $userOrder = [
+            'reference' => $reference,
+            'pagseguro_code' => $result->getCode(),
+            'pagseguro_status' => $result->getStatus(),
+            'items' => serialize($cartItems),
+            'store_id' => 42,
+        ];
+
+        $userOrder = $user->orders()->create($userOrder);
+        $userOrder->stores()->sync($stores);
+
+        session()->forget('cart');
+        session()->forget('pagseguro_session_code');
+
+        return response()->json([
+            'data' => [
+                'status' => true,
+                'message' => 'Pedido criado com sucesso!',
+                'order' => $reference
+            ]
+        ]);
+
         try {
-            $cartItems = session()->get('cart');
-            $user = auth()->user();
-            $data = $request->all();
-            // Set a reference code for this payment request. It is useful to identify this payment
-            // in future notifications.
-            $reference = 'LIBPHP000001';
 
-            $creditCardPayment = new CreditCard($cartItems, $user, $data, $reference);
-            $result = $creditCardPayment->doPayment();
-
-            $userOrder = [
-                'reference' => $reference,
-                'pagseguro_code' => $result->getCode(),
-                'pagseguro_status' => $result->getStatus(),
-                'items' => '',
-                'store_id' => 42,
-            ];
-
-            $user->orders()->create($userOrder);
-
-            session()->forget('cart');
-            session()->forget('pagseguro_session_code');
-
-            return response()->json([
-                'data' => [
-                    'status' => true,
-                    'message' => 'Pedido criado com sucesso!',
-                    'order' => $reference
-                ]
-            ]);
         } catch (\Exception $exception) {
-            $message = env('APP_DEUBUG') ? $exception->getMessage() : 'Erro ao processar pedido.';
+            $message = env('APP_DEUBUG') ? 'Erro ao processar pedido: '.$exception->getMessage() : 'Erro ao processar pedido.';
             return response()->json([
                 'data' => [
                     'status' => false,

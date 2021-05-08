@@ -53,7 +53,7 @@
                     </a>
                 </div>
             @else
-                <div class="alert alert-warning">Carrinho vazio!</div>
+                <div class="alert alert-warning"><i class="fa fa-frown-o" aria-hidden="true"></i> Carrinho vazio... </div>
             @endif
         </div>
     </div>

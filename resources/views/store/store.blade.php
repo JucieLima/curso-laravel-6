@@ -2,7 +2,29 @@
 
 @section('content')
     <div class="row mb-4">
-        @foreach($products as $key => $product)
+        <div class="col-md-3">
+            @if($store->logo)
+                <img src="{{asset('storage/'.$store->logo)}}" alt="logo" class="img-fluid">
+            @else
+                <img src="{{asset('assets/img/no-image.jpg')}}" alt="esta loja não possui logo"
+                     class="img-fluid">
+            @endif
+        </div>
+        <div class="col-md-9 text-md-right  pt-4">
+            <h2>{{$store->name}}</h2>
+            <p>{{$store->decription}}</p>
+            <p>
+                <strong>Contatos:</strong>
+                <span><i class="fa fa-phone"></i> {{$store->phone}}</span> | <span><i class="fa fa-whatsapp"></i> {{$store->mobile_phone}}</span>
+            </p>
+        </div>
+        <div class="col-12">
+            <hr>
+            <h4 class="mb-4 mt-4">
+                Produtos da loja:
+            </h4>
+        </div>
+        @forelse($store->products as $key => $product)
             <div class="col-md-4 mb-2">
                 <div class="card">
                     @if($product->photos->count())
@@ -31,29 +53,12 @@
     </div>
     <div class="row  mb-4">
         @endif
-        @endforeach
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <h2>Lojas em Destaque</h2>
-            <hr>
-        </div>
-        @foreach($stores as $store)
-            <div class="col-4">
-                @if($store->logo)
-                    <a href="{{route('product.single', [$product->slug])}}" title="ver loja">
-                        <img src="{{asset('storage/'.$store->logo)}}" alt="logo" class="img-fluid">
-                    </a>
-                @else
-                    <img src="{{asset('assets/img/no-image.jpg')}}" alt="esta loja não possui logo"
-                         class="img-fluid">
-                @endif
-                <h3>{{$store->name}}</h3>
-                <p>{{$store->description}}</p>
-                <a href="{{route('store.single', ['slug' => $store->slug])}}" class="btn btn-sm btn-success">
-                    Ver loja
-                </a>
+        @empty
+            <div class="col-12">
+                <div class="alert alert-info">
+                    Ainda não temos produtos para mostrar aqui, por favor, volte mais tarde!
+                </div>
             </div>
-        @endforeach
+        @endforelse
     </div>
 @endsection

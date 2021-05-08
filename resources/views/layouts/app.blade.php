@@ -20,8 +20,10 @@
         @auth
         <ul class="navbar-nav mr-auto">
             <li class="nav-item @if(request()->is('admin/stores*')) active @endif">
-                <a class="nav-link" href="{{route('admin.stores.index')}}">Lojas <span
+                <a class="nav-link" href="{{route('admin.stores.index')}}">Loja <span
                         class="sr-only">(página atual)</span></a>
+            <li class="nav-item @if(request()->is('admin/orders*')) active @endif">
+                <a class="nav-link" href="{{route('admin.orders.my')}}">Meus Pedidos</a>
             </li>
             <li class="nav-item @if(request()->is('admin/products*')) active @endif">
                 <a class="nav-link" href="{{route('admin.products.index')}}">Produtos</a>
@@ -32,10 +34,9 @@
         </ul>
         <div class="my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <span class="nav-link">
-                        {{auth()->user()->name}}
-                    </span>
+                <li class="nav-item @if(request()->is('/')) active @endif">
+                    <a class="nav-link" href="{{route('home')}}"><i class="fa fa-home" aria-hidden="true"></i> Home <span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"

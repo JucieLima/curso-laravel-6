@@ -23,29 +23,18 @@
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item @if(request()->is('/')) active @endif">
-                <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{route('home')}}"><i class="fa fa-home" aria-hidden="true"></i> Home <span
+                        class="sr-only">(current)</span></a>
             </li>
+
             @foreach($categories as $category)
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('category.single', ['slug' => $category->slug])}}">{{$category->name}}</a>
+                <li class="nav-item @if(request()->is('category/'.$category->slug)) active @endif">
+                    <a class="nav-link"
+                       href="{{route('category.single', ['slug' => $category->slug])}}">{{$category->name}}</a>
                 </li>
             @endforeach
         </ul>
 
-        @auth
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item @if(request()->is('admin/stores*')) active @endif">
-                    <a class="nav-link" href="{{route('admin.stores.index')}}">Lojas <span
-                            class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item @if(request()->is('admin/products*')) active @endif">
-                    <a class="nav-link" href="{{route('admin.products.index')}}">Produtos</a>
-                </li>
-                <li class="nav-item @if(request()->is('admin/categories*')) active @endif">
-                    <a class="nav-link" href="{{route('admin.categories.index')}}">Categorias</a>
-                </li>
-            </ul>
-        @endauth
         <div class="my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -62,12 +51,16 @@
                 </li>
                 @auth
                     <li class="nav-item">
-                        <span class="nav-link">{{auth()->user()->name}}</span>
+                        <a href="{{route('user.orders')}}" title="Ver meus pedidos">
+                            <span class="nav-link">{{auth()->user()->name}}
+                                <i class="fa fa-user" aria-hidden="true"></i></span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"
                            onclick="event.preventDefault();
-                           document.querySelector('form.logout').submit(); ">Sair</a>
+                           document.querySelector('form.logout').submit(); ">Sair <i class="fa fa-sign-out"
+                                                                                     aria-hidden="true"></i></a>
 
                         <form action="{{route('logout')}}" class="logout" method="POST" style="display:none;">
                             @csrf
