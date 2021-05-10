@@ -8,7 +8,7 @@ class UserOrderController extends Controller
 {
     public function index()
     {
-        $userOrders = auth()->user()->orders()->paginate(15);
+        $userOrders = auth()->user()->orders()->orderBy('created_at', 'DESC')->paginate(15);
         return view('store/user-orders', compact('userOrders'));
     }
 }

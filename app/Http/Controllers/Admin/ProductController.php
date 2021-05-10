@@ -29,10 +29,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $userStore = auth()->user()->store;
-        $products = $userStore->products()->paginate(10);
+        if(auth()->user()->store){
+            $userStore = auth()->user()->store;
+            $products = $userStore->products()->paginate(10);
 
-        return view('admin.products.index', compact('products'));
+            return view('admin.products.index', compact('products'));
+        }
+        flash('Você ainda não criou sua loja!')->warning();
+        return redirect()->route('admin.stores.index');
+
     }
 
     /**
@@ -56,6 +61,8 @@ class ProductController extends Controller
     {
         $data = $request->all();
         $categories = $request->get('categories', null);
+
+        $data['price'] = formatMoneyToDatabase($data['price']);
 
         $store = auth()->user()->store;
         $product = $store->products()->create($data);

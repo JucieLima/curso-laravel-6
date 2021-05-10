@@ -21,7 +21,13 @@ class OrdersController extends Controller
 
     public function index()
     {
-        $orders = auth()->user()->store->orders()->paginate(15);
-        return view('admin.orders.index', compact('orders'));
+
+        if(auth()->user()->store){
+            $orders = auth()->user()->store->orders()->orderBy('created_at', 'DESC')->paginate(15);
+            return view('admin.orders.index', compact('orders'));
+        }
+
+        flash('Você ainda não criou sua loja!')->warning();
+        return redirect()->route('admin.stores.index');
     }
 }

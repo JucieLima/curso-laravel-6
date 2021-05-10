@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'role',
     ];
 
     /**
@@ -39,9 +39,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function store(): HasOne
+    public function store()
     {
-        return $this->hasOne(Store::class);
+        return $this->hasOne(Store::class, 'user_id', 'id');
     }
 
     public function orders()
